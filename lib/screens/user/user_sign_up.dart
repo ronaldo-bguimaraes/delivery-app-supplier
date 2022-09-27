@@ -9,7 +9,6 @@ import 'package:delivery_app_supplier/service/interface/i_service_fornecedor_aut
 import 'package:easy_mask/easy_mask.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserSignUp extends StatefulWidget {
@@ -26,9 +25,6 @@ class _UserSignUpState extends State<UserSignUp> {
 
   late final TextInputMask _cnpjMask;
   late final TextInputMask _phoneMask;
-  late final TextInputMask _dateMask;
-
-  final _dateFormat = DateFormat('dd/MM/yyyy');
 
   Fornecedor _fornecedor = Fornecedor();
 
@@ -37,7 +33,6 @@ class _UserSignUpState extends State<UserSignUp> {
     super.initState();
     _cnpjMask = getCnpjMask();
     _phoneMask = getPhoneMask();
-    _dateMask = getDateMask();
   }
 
   @override
@@ -170,9 +165,6 @@ class _UserSignUpState extends State<UserSignUp> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
                     TextFormField(
                       initialValue: _fornecedor.usuario.senha,
                       onSaved: (value) {
@@ -229,7 +221,7 @@ class _UserSignUpState extends State<UserSignUp> {
                         if (state != null && state.validate()) {
                           try {
                             _fornecedor.usuario = await context.read<IServiceAuth>().signUp(_fornecedor.usuario);
-                            // create cliente profile
+                            // create fornecdor profile
                             _fornecedor = await context.read<IServiceFornecedorAuth>().save(_fornecedor);
                             //
                             Navigator.of(context).pushNamedAndRemoveUntil(

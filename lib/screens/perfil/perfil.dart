@@ -1,4 +1,4 @@
-import 'package:delivery_app_supplier/dto/cliente.dart';
+import 'package:delivery_app_supplier/dto/fornecedor.dart';
 import 'package:delivery_app_supplier/dto/endereco.dart';
 import 'package:delivery_app_supplier/dto/usuario.dart';
 import 'package:delivery_app_supplier/screens/perfil/endereco/endereco_list.dart';
@@ -7,7 +7,7 @@ import 'package:delivery_app_supplier/screens/perfil/meus_dados.dart';
 import 'package:delivery_app_supplier/screens/perfil/minhas_formas_pagamento.dart';
 import 'package:delivery_app_supplier/screens/user/user_sign_in.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_auth.dart';
-import 'package:delivery_app_supplier/service/interface/i_service_cliente_auth.dart';
+import 'package:delivery_app_supplier/service/interface/i_service_fornecedor_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_endereco_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,15 +30,15 @@ class _PerfilState extends State<Perfil> {
         if (usuario == null) {
           throw Exception('Usuário não está logado');
         }
-        Cliente? cliente = await context.read<IServiceClienteAuth>().getByUsuario(usuario);
-        if (cliente == null) {
-          throw Exception('Cliente não encontrado');
+        Fornecedor? fornecedor = await context.read<IServiceFornecedorAuth>().getByUsuario(usuario);
+        if (fornecedor == null) {
+          throw Exception('Fornecedor não encontrado');
         }
-        cliente.usuario = usuario;
+        fornecedor.usuario = usuario;
         //
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) {
-            return MeusDados(cliente: cliente);
+            return MeusDados(fornecedor: fornecedor);
           }),
         );
       },
@@ -53,7 +53,7 @@ class _PerfilState extends State<Perfil> {
     ),
     ListItem(
       title: 'Endereços',
-      subTitle: 'Meus endereços para entrega',
+      subTitle: 'Meus endereços de venda',
       icon: Icons.location_pin,
       event: (context) async {
         final Usuario? usuario = context.read<IServiceAuth>().currentUser;
@@ -98,7 +98,7 @@ class _PerfilState extends State<Perfil> {
         title: Row(
           children: [
             const CircleAvatar(
-              backgroundImage: AssetImage('./assets/images/user.png'),
+              backgroundImage: AssetImage('./assets/images/fornecedor.png'),
               radius: 20,
               backgroundColor: Colors.grey,
             ),
