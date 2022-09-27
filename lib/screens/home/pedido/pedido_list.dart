@@ -1,4 +1,3 @@
-import 'package:delivery_app_supplier/screens/home/inicio/cart/cart_button.dart';
 import 'package:flutter/material.dart';
 
 class PedidoList extends StatefulWidget {
@@ -14,7 +13,6 @@ class _PedidoListState extends State<PedidoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: const CartButton(),
       appBar: AppBar(
         title: const Text('Meus Pedidos'),
       ),

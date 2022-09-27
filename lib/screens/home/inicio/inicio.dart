@@ -71,7 +71,6 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       child: Scaffold(
-        floatingActionButton: const CartButton(),
         appBar: AppBar(
           title: const Text('Inicio'),
           bottom: TabBar(
