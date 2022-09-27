@@ -35,7 +35,7 @@ class _UserSignInEmailState extends State<UserSignInEmail> {
             child: Column(
               children: [
                 const Image(
-                  image: AssetImage('./assets/images/icon.png'),
+                  image: AssetImage('./assets/images/restaurante.png'),
                   width: 100,
                   height: 100,
                 ),
@@ -43,7 +43,7 @@ class _UserSignInEmailState extends State<UserSignInEmail> {
                   height: 10,
                 ),
                 const Text(
-                  'Delivery para Clientes',
+                  'Delivery para Fornecedores',
                   style: TextStyle(
                     fontSize: 25,
                   ),

@@ -1,21 +1,20 @@
-import 'package:delivery_app_supplier/dto/cliente.dart';
+import 'package:delivery_app_supplier/dto/fornecedor.dart';
 import 'package:delivery_app_supplier/screens/component/full_scroll.dart';
 import 'package:delivery_app_supplier/screens/home/home.dart';
-import 'package:delivery_app_supplier/screens/mask/cpf_mask.dart';
+import 'package:delivery_app_supplier/screens/mask/cnpj_mask.dart';
 import 'package:delivery_app_supplier/screens/mask/date_mask.dart';
 import 'package:delivery_app_supplier/screens/mask/phone_mask.dart';
-import 'package:delivery_app_supplier/service/interface/i_service_cliente_auth.dart';
+import 'package:delivery_app_supplier/service/interface/i_service_fornecedor_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_usuario_auth.dart';
 import 'package:easy_mask/easy_mask.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MeusDados extends StatefulWidget {
-  final Cliente cliente;
+  final Fornecedor fornecedor;
 
-  const MeusDados({Key? key, required this.cliente}) : super(key: key);
+  const MeusDados({Key? key, required this.fornecedor}) : super(key: key);
 
   @override
   State<MeusDados> createState() => _MeusDadosState();
@@ -24,22 +23,18 @@ class MeusDados extends StatefulWidget {
 class _MeusDadosState extends State<MeusDados> {
   final _formKey = GlobalKey<FormState>();
 
-  late final TextInputMask _cpfMask;
+  late final TextInputMask _cnpjMask;
   late final TextInputMask _phoneMask;
-  late final TextInputMask _dateMask;
 
-  final _dateFormat = DateFormat('dd/MM/yyyy');
-
-  late final Cliente _cliente;
+  late final Fornecedor _fornecedor;
 
   @override
   void initState() {
     super.initState();
-    _cliente = widget.cliente;
+    _fornecedor = widget.fornecedor;
 
-    _cpfMask = getCpfMask();
+    _cnpjMask = getCnpjMask();
     _phoneMask = getPhoneMask();
-    _dateMask = getDateMask();
   }
 
   @override
@@ -58,9 +53,9 @@ class _MeusDadosState extends State<MeusDados> {
                 child: Column(
                   children: [
                     TextFormField(
-                      initialValue: _cliente.usuario.nome,
+                      initialValue: _fornecedor.usuario.nome,
                       onSaved: (value) {
-                        _cliente.usuario.nome = value!;
+                        _fornecedor.usuario.nome = value!;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -78,24 +73,18 @@ class _MeusDadosState extends State<MeusDados> {
                       height: 15,
                     ),
                     TextFormField(
-                      initialValue: _cpfMask.magicMask.getMaskedString(_cliente.cpf),
+                      initialValue: _fornecedor.razaoSocial,
                       onSaved: (value) {
-                        _cliente.cpf = value!.replaceAll(RegExp(r'\D'), '');
+                        _fornecedor.razaoSocial = value!;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'CPF',
+                        labelText: 'Razão Social',
                       ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        _cpfMask,
-                      ],
+                      keyboardType: TextInputType.name,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'O CPF não pode ser vazio';
-                        }
-                        if (value.length < 14) {
-                          return 'CPF inválido';
+                          return 'A razão social não pode ser vazia';
                         }
                         return null;
                       },
@@ -104,9 +93,35 @@ class _MeusDadosState extends State<MeusDados> {
                       height: 15,
                     ),
                     TextFormField(
-                      initialValue: _phoneMask.magicMask.getMaskedString(_cliente.usuario.telefone),
+                      initialValue: _cnpjMask.magicMask.getMaskedString(_fornecedor.cnpj),
                       onSaved: (value) {
-                        _cliente.usuario.telefone = value!.replaceAll(RegExp(r'\D'), '');
+                        _fornecedor.cnpj = value!.replaceAll(RegExp(r'\D'), '');
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'CNPJ',
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        _cnpjMask,
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'O CNPJ não pode ser vazio';
+                        }
+                        if (value.length < 14) {
+                          return 'CNPJ inválido';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      initialValue: _phoneMask.magicMask.getMaskedString(_fornecedor.usuario.telefone),
+                      onSaved: (value) {
+                        _fornecedor.usuario.telefone = value!.replaceAll(RegExp(r'\D'), '');
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -130,9 +145,9 @@ class _MeusDadosState extends State<MeusDados> {
                       height: 15,
                     ),
                     TextFormField(
-                      initialValue: _cliente.usuario.email,
+                      initialValue: _fornecedor.usuario.email,
                       onSaved: (value) {
-                        _cliente.usuario.email = value!;
+                        _fornecedor.usuario.email = value!;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -153,24 +168,21 @@ class _MeusDadosState extends State<MeusDados> {
                       height: 15,
                     ),
                     TextFormField(
-                      initialValue: _dateFormat.format(_cliente.dataNascimento),
+                      initialValue: _fornecedor.usuario.senha,
                       onSaved: (value) {
-                        _cliente.dataNascimento = _dateFormat.parse(value!);
+                        _fornecedor.usuario.senha = value!;
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Data de nascimento',
+                        labelText: 'Senha',
                       ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        _dateMask,
-                      ],
+                      obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'A data de nascimento não pode ser vazia';
+                          return 'A senha não pode ser vazia';
                         }
-                        if (value.length < 10) {
-                          return 'Data de nascimento inválida';
+                        if (value.length < 8) {
+                          return 'A senha deve ter pelo menos 8 caracteres';
                         }
                         return null;
                       },
@@ -179,20 +191,7 @@ class _MeusDadosState extends State<MeusDados> {
                       height: 15,
                     ),
                     TextFormField(
-                      initialValue: _cliente.usuario.senha,
-                      onSaved: (value) {
-                        _cliente.usuario.senha = value!;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
+                      initialValue: '',
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Confirme a Senha',
@@ -205,7 +204,7 @@ class _MeusDadosState extends State<MeusDados> {
                         if (value.length < 8) {
                           return 'A senha deve ter pelo menos 8 caracteres';
                         }
-                        if (value != _cliente.usuario.senha) {
+                        if (value != _fornecedor.usuario.senha) {
                           return 'As senhas não correspondem';
                         }
                         return null;
@@ -223,8 +222,8 @@ class _MeusDadosState extends State<MeusDados> {
                         }
                         if (state != null && state.validate()) {
                           try {
-                            await context.read<IServiceUsuarioAuth>().save(_cliente.usuario);
-                            await context.read<IServiceClienteAuth>().save(_cliente);
+                            await context.read<IServiceUsuarioAuth>().save(_fornecedor.usuario);
+                            await context.read<IServiceFornecedorAuth>().save(_fornecedor);
                             //
                             Navigator.of(context).pushNamedAndRemoveUntil(
                               Home.routeName,
@@ -241,7 +240,7 @@ class _MeusDadosState extends State<MeusDados> {
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: const [
-                                        Text('Erro ao cadastrar cliente'),
+                                        Text('Erro ao cadastrar fornecedor'),
                                       ],
                                     ),
                                   ),
