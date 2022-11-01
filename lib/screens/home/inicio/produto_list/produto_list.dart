@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProdutoList extends StatefulWidget {
-  final List<ProdutoItemList> list;
-
-  const ProdutoList({Key? key, required this.list}) : super(key: key);
+  const ProdutoList({Key? key}) : super(key: key);
 
   @override
   State<ProdutoList> createState() => _ProdutoListState();
