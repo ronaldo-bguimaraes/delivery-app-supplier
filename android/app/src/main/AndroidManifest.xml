@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.delivery_app_supplier">
+    package="com.toptag.lucianos_delivery_para_fornecedores">
    <application
-        android:label="delivery_app_supplier"
+        android:label="Luciano's Delivery para Fornecedores"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
