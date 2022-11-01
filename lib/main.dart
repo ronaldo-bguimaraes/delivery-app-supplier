@@ -24,7 +24,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Delivery Cliente',
+      title: "Luciano's Delivery para Fornecedores",
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),

@@ -36,9 +36,7 @@ class ProdutoItemList {
       categoria: '',
       image: const AssetImage('./assets/images/produto.png'),
       event: (ctx) {
-        final itemProduto = ItemProduto.fromProduto(produto);
-        ctx.read<IServiceCart>().add(itemProduto);
-        Navigator.of(ctx).pushNamed(CartScreen.routeName);
+        //
       },
     );
   }
