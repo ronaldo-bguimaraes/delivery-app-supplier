@@ -20,7 +20,7 @@ class _InicioState extends State<Inicio> {
     return DefaultTabController(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Luciano's Delivery para Fornecedores"),
+          title: const Text("Inicio"),
           bottom: TabBar(
             tabs: _categorias.map((e) => Tab(text: e)).toList(),
           ),
