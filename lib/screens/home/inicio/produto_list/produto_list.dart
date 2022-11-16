@@ -1,7 +1,11 @@
+import 'package:delivery_app_supplier/dto/fornecedor.dart';
 import 'package:delivery_app_supplier/dto/produto.dart';
+import 'package:delivery_app_supplier/dto/venda.dart';
 import 'package:delivery_app_supplier/screens/builder/future_snapshot_builder.dart';
+import 'package:delivery_app_supplier/screens/helper/get_cliente.dart';
 import 'package:delivery_app_supplier/screens/home/inicio/produto_list/produto_item_list.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_produto_auth.dart';
+import 'package:delivery_app_supplier/service/interface/i_service_venda_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +17,15 @@ class ProdutoList extends StatefulWidget {
 }
 
 class _ProdutoListState extends State<ProdutoList> {
+  Future<List<Produto>> getProdutoList() async {
+    Fornecedor fornecedor = await getCurrentFornecedor(context);
+    return await context.read<IServiceProdutoAuth>().getByFornecedor(fornecedor);
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return FutureSnapshotBuilder<List<Produto>>(
-      future: ctx.read<IServiceProdutoAuth>().all(),
+      future: getProdutoList(),
       showChild: (produtos) {
         return produtos != null && produtos.isNotEmpty;
       },

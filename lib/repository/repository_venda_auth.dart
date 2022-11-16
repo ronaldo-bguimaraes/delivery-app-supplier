@@ -1,16 +1,16 @@
 import 'dart:io';
 import 'package:delivery_app_supplier/dto/fornecedor.dart';
-import 'package:delivery_app_supplier/dto/produto.dart';
 import 'package:delivery_app_supplier/dto/usuario.dart';
+import 'package:delivery_app_supplier/dto/venda.dart';
 import 'package:delivery_app_supplier/json/json_tool.dart';
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_base.dart';
-import 'package:delivery_app_supplier/repository/interface/i_repository_produto_auth.dart';
+import 'package:delivery_app_supplier/repository/interface/i_repository_venda_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_auth.dart';
 import 'package:delivery_app_supplier/config/interface/i_config.dart';
 import 'package:http/http.dart' as http;
 
-class RepositoryProdutoAuth<T extends Produto, U extends Usuario, V extends Fornecedor> extends RepositoryAuth<T, U> implements IRepositoryProdutoAuth<T, U, V> {
+class RepositoryVendaAuth<T extends Venda, U extends Usuario, V extends Fornecedor> extends RepositoryAuth<T, U> implements IRepositoryVendaAuth<T, U, V> {
   @override
   IConfig config;
 
@@ -21,9 +21,9 @@ class RepositoryProdutoAuth<T extends Produto, U extends Usuario, V extends Forn
   IMapper<T> mapper;
 
   @override
-  String subPath = 'produtos';
+  String subPath = 'vendas';
 
-  RepositoryProdutoAuth(this.config, this.auth, this.mapper);
+  RepositoryVendaAuth(this.config, this.auth, this.mapper);
 
   @override
   Future<List<T>> getByFornecedor(V fornecedor) async {
