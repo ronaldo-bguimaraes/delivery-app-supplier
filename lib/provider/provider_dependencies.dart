@@ -1,25 +1,33 @@
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_cliente.dart';
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_endereco.dart';
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_fornecedor.dart';
+import 'package:delivery_app_supplier/mapper/interface/i_mapper_item_produto.dart';
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_produto.dart';
 import 'package:delivery_app_supplier/mapper/interface/i_mapper_usuario.dart';
+import 'package:delivery_app_supplier/mapper/interface/i_mapper_venda.dart';
 import 'package:delivery_app_supplier/mapper/mapper_cliente.dart';
 import 'package:delivery_app_supplier/mapper/mapper_endereco.dart';
 import 'package:delivery_app_supplier/mapper/mapper_fornecedor.dart';
+import 'package:delivery_app_supplier/mapper/mapper_item_produto.dart';
 import 'package:delivery_app_supplier/mapper/mapper_produto.dart';
 import 'package:delivery_app_supplier/mapper/mapper_usuario.dart';
+import 'package:delivery_app_supplier/mapper/mapper_venda.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_cliente_auth.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_endereco_auth.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_fornecedor_auth.dart';
+import 'package:delivery_app_supplier/repository/interface/i_repository_item_produto_auth.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_produto_auth.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_usuario_auth.dart';
 import 'package:delivery_app_supplier/repository/interface/i_repository_usuario_anon.dart';
+import 'package:delivery_app_supplier/repository/interface/i_repository_venda_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_cliente_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_endereco_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_fornecedor_auth.dart';
+import 'package:delivery_app_supplier/repository/repository_item_produto_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_produto_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_usuario_auth.dart';
 import 'package:delivery_app_supplier/repository/repository_usuario_anon.dart';
+import 'package:delivery_app_supplier/repository/repository_venda_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_cart.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_cliente_auth.dart';
@@ -29,6 +37,7 @@ import 'package:delivery_app_supplier/service/interface/i_service_fornecedor_aut
 import 'package:delivery_app_supplier/service/interface/i_service_produto_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_usuario_auth.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_usuario_anon.dart';
+import 'package:delivery_app_supplier/service/interface/i_service_venda_auth.dart';
 import 'package:delivery_app_supplier/service/service_auth.dart';
 import 'package:delivery_app_supplier/service/service_cart.dart';
 import 'package:delivery_app_supplier/service/service_cliente_auth.dart';
@@ -38,17 +47,14 @@ import 'package:delivery_app_supplier/service/service_fornecedor_auth.dart';
 import 'package:delivery_app_supplier/service/service_produto_auth.dart';
 import 'package:delivery_app_supplier/service/service_usuario_auth.dart';
 import 'package:delivery_app_supplier/service/service_usuario_anon.dart';
+import 'package:delivery_app_supplier/service/service_venda_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// provê em na ordem correta todas as dependencias nescessárias
 class ProviderDependencies extends StatelessWidget {
   final Widget child;
 
-  const ProviderDependencies({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const ProviderDependencies({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +78,16 @@ class ProviderDependencies extends StatelessWidget {
         ),
         Provider<IMapperProduto>(
           create: (ctx) => MapperProduto(),
+          lazy: true,
+        ),
+        Provider<IMapperItemProduto>(
+          create: (ctx) => MapperItemProduto(),
+          lazy: true,
+        ),
+        Provider<IMapperVenda>(
+          create: (ctx) => MapperVenda(
+            ctx.read<IMapperItemProduto>(),
+          ),
           lazy: true,
         ),
         Provider<IConfig>(
@@ -131,6 +147,22 @@ class ProviderDependencies extends StatelessWidget {
           ),
           lazy: true,
         ),
+        Provider<IRepositoryItemProdutoAuth>(
+          create: (ctx) => RepositoryItemProdutoAuth(
+            ctx.read<IConfig>(),
+            ctx.read<IServiceAuth>(),
+            ctx.read<IMapperItemProduto>(),
+          ),
+          lazy: true,
+        ),
+        Provider<IRepositoryVendaAuth>(
+          create: (ctx) => RepositoryVendaAuth(
+            ctx.read<IConfig>(),
+            ctx.read<IServiceAuth>(),
+            ctx.read<IMapperVenda>(),
+          ),
+          lazy: true,
+        ),
         Provider<IServiceUsuarioAnon>(
           create: (ctx) => ServiceUsuarioAnon(
             ctx.read<IRepositoryUsuarioAnon>(),
@@ -169,6 +201,13 @@ class ProviderDependencies extends StatelessWidget {
         ),
         ChangeNotifierProvider<IServiceCart>(
           create: (ctx) => ServiceCart(),
+          lazy: true,
+        ),
+        Provider<IServiceVendaAuth>(
+          create: (ctx) => ServiceVendaAuth(
+            ctx.read<IRepositoryVendaAuth>(),
+            ctx.read<IServiceProdutoAuth>(),
+          ),
           lazy: true,
         ),
       ],

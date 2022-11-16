@@ -11,12 +11,22 @@ class PedidoList extends StatefulWidget {
 
 class _PedidoListState extends State<PedidoList> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus Pedidos'),
       ),
-      body: Container(),
+      body: Container(
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text('click'),
+        ),
+      ),
     );
   }
 }

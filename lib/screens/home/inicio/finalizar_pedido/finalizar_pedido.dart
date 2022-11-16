@@ -270,9 +270,8 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  //
-                  final venda = Venda.fromItensProduto(cart.itensProduto);
-                  print(venda);
+                  // final venda = Venda.fromItensProduto(cart.itensProduto);
+                  // print(venda);
                 },
                 child: Text("Finalizar Pedido (R\$ ${cart.totalCart().toStringAsFixed(2)})"),
                 style: ElevatedButton.styleFrom(

@@ -45,7 +45,7 @@ class _UserSignInState extends State<UserSignIn> {
                 child: Column(
                   children: [
                     const Image(
-                      image: AssetImage('./assets/images/restaurante.png'),
+                      image: AssetImage('./assets/images/icon.png'),
                       width: 100,
                       height: 100,
                     ),
