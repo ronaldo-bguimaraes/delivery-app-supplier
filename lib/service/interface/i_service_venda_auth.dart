@@ -5,4 +5,8 @@ import 'package:delivery_app_supplier/service/interface/i_service_entity_auth.da
 
 abstract class IServiceVendaAuth<T extends Venda, U extends Usuario, V extends Fornecedor> extends IServiceEntityAuth<T, U> {
   Future<List<T>> getByFornecedor(V cliente);
+
+  Future<void> includeProdutos(List<T> vendas);
+
+  Future<void> includeClienteAndUsuario(List<T> vendas);
 }

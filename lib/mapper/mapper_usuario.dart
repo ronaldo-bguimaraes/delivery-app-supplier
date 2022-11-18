@@ -23,7 +23,7 @@ class MapperUsuario implements IMapperUsuario {
       telefone: map['telefone'],
       email: map['email'],
       dataCadastro: DateTime.parse(map['dataCadastro']),
-      token: map['token'],
+      token: map['token'] ?? "",
     );
   }
 }
