@@ -1,7 +1,3 @@
-import 'package:delivery_app_supplier/screens/home/inicio/cart/cart_button.dart';
-import 'package:delivery_app_supplier/screens/home/inicio/fornecedor_list/fornecedor_list.dart';
-import 'package:delivery_app_supplier/screens/home/inicio/fornecedor_list/fornecedor_item_list.dart';
-import 'package:delivery_app_supplier/screens/home/inicio/produto_list/produto_item_list.dart';
 import 'package:delivery_app_supplier/screens/home/inicio/produto_list/produto_list.dart';
 import 'package:flutter/material.dart';
 

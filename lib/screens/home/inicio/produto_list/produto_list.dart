@@ -5,7 +5,6 @@ import 'package:delivery_app_supplier/screens/builder/future_snapshot_builder.da
 import 'package:delivery_app_supplier/screens/helper/get_cliente.dart';
 import 'package:delivery_app_supplier/screens/home/inicio/produto_list/produto_item_list.dart';
 import 'package:delivery_app_supplier/service/interface/i_service_produto_auth.dart';
-import 'package:delivery_app_supplier/service/interface/i_service_venda_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

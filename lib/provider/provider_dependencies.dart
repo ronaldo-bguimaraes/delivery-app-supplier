@@ -207,6 +207,8 @@ class ProviderDependencies extends StatelessWidget {
           create: (ctx) => ServiceVendaAuth(
             ctx.read<IRepositoryVendaAuth>(),
             ctx.read<IServiceProdutoAuth>(),
+            ctx.read<IServiceClienteAuth>(),
+            ctx.read<IServiceUsuarioAuth>(),
           ),
           lazy: true,
         ),
