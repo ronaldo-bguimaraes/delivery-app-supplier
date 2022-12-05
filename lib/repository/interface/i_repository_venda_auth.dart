@@ -5,4 +5,8 @@ import 'package:delivery_app_supplier/repository/interface/i_repository_auth.dar
 
 abstract class IRepositoryVendaAuth<T extends Venda, U extends Usuario, V extends Fornecedor> extends IRepositoryAuth<T, U> {
   Future<List<T>> getByFornecedor(V fornecedor);
+
+  Future<void> confirmar(T venda);
+
+  Future<void> cancelar(T venda);
 }
