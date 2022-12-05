@@ -36,4 +36,24 @@ class RepositoryVendaAuth<T extends Venda, U extends Usuario, V extends Forneced
     List list = JsonTool.decode(response.body);
     return list.map((e) => mapper.fromMap(e)).toList();
   }
+
+  @override
+  Future<void> confirmar(T venda) async {
+    await http.get(
+      Uri.parse('$fullPath/confirmar/${venda.id}'),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer ${auth.currentToken}',
+      },
+    );
+  }
+
+  @override
+  Future<void> cancelar(T venda) async {
+    await http.get(
+      Uri.parse('$fullPath/cancelar/${venda.id}'),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer ${auth.currentToken}',
+      },
+    );
+  }
 }

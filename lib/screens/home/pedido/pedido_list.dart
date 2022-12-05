@@ -122,8 +122,9 @@ class _PedidoListState extends State<PedidoList> {
                                 children: [
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () {
-                                        print(pedido.cliente.usuario.nome);
+                                      onPressed: () async {
+                                        await context.read<IServiceVendaAuth>().cancelar(pedido);
+                                        setState(() {});
                                       },
                                       child: const Text("Cancelar"),
                                       style: ElevatedButton.styleFrom(
@@ -136,7 +137,10 @@ class _PedidoListState extends State<PedidoList> {
                                   ),
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        await context.read<IServiceVendaAuth>().confirmar(pedido);
+                                        setState(() {});
+                                      },
                                       child: const Text("Aceitar"),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.green,

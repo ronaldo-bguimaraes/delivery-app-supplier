@@ -48,4 +48,14 @@ class ServiceVendaAuth<T extends Venda, U extends Usuario, V extends Fornecedor>
       }
     }
   }
+
+  @override
+  Future<void> cancelar(T venda) async {
+    await repositoryVenda.cancelar(venda);
+  }
+
+  @override
+  Future<void> confirmar(T venda) async {
+    await repositoryVenda.confirmar(venda);
+  }
 }
