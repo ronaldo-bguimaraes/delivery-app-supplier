@@ -39,6 +39,16 @@ class _PedidoListState extends State<PedidoList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Minhas Vendas'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: const Icon(
+              Icons.refresh,
+            ),
+          ),
+        ],
       ),
       body: FutureSnapshotBuilder<List<Venda>>(
         future: getVendaList(),

@@ -16,14 +16,27 @@ class _InicioState extends State<Inicio> {
     return DefaultTabController(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Inicio"),
-          bottom: TabBar(
-            tabs: _categorias.map((e) => Tab(text: e)).toList(),
-          ),
-        ),
-        body: const TabBarView(
+            title: const Text("Inicio"),
+            bottom: TabBar(
+              tabs: _categorias.map((e) => Tab(text: e)).toList(),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                ),
+              ),
+            ]),
+        body: TabBarView(
           children: [
-            ProdutoList(),
+            Builder(
+              builder: (context) {
+                return ProdutoList();
+              },
+            ),
           ],
         ),
       ),
